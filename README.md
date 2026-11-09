@@ -1,18 +1,18 @@
-# HEPRA QR Manager
+# HEPRA QR Manager v2
 
-Next.js 15 application for managing dynamic QR codes.
+Dynamic QR codes with editable destinations, scan analytics, and SVG/PNG export.
 
-## Vercel deployment
+## Deploy on Vercel
+1. Create a Neon PostgreSQL database and copy its pooled connection string.
+2. Add DATABASE_URL, ADMIN_USER, ADMIN_PASSWORD, SESSION_SECRET (at least 16 characters; use 32+ random characters), FALLBACK_URL and optionally NEXT_PUBLIC_BASE_URL in Vercel Project Settings → Environment Variables.
+3. Redeploy and visit /admin.
 
-Set these environment variables before using the admin features:
+Tables are created automatically on first admin visit. schema.sql is included for manual setup.
 
-- DATABASE_URL
-- ADMIN_USER
-- ADMIN_PASSWORD
-- SESSION_SECRET
-- FALLBACK_URL
-- NEXT_PUBLIC_BASE_URL (optional)
+## Local development
+Copy .env.example to .env.local, set real values, then run npm install and npm run dev.
 
-The application uses Neon Postgres. See `.env.example` and `schema.sql` for setup details.
+## Features
+Create custom/random QR codes; edit destinations without reprinting; pause/delete; analytics by day/device/OS; approximate unique devices; CSV export; QR colors/error correction/optional logo; SVG and PNG downloads.
 
-Run locally with `npm install` and `npm run dev`.
+Security: admin routes and server actions use signed HttpOnly cookies; passwords and secrets must remain private. IP addresses are stored only as salted hashes. Destination schemes are restricted to http, https, tel, mailto, upi and sms.

@@ -1,0 +1,5 @@
+const enc=new TextEncoder();export const COOKIE='qr_session';
+async function hmac(data:string){const secret=process.env.SESSION_SECRET||'';if(secret.length<16)throw new Error('SESSION_SECRET must contain at least 16 characters');const key=await crypto.subtle.importKey('raw',enc.encode(secret),{name:'HMAC',hash:'SHA-256'},false,['sign']);const sig=await crypto.subtle.sign('HMAC',key,enc.encode(data));return Array.from(new Uint8Array(sig),b=>b.toString(16).padStart(2,'0')).join('');}
+export function safeEqual(a:string,b:string){if(a.length!==b.length)return false;let r=0;for(let i=0;i<a.length;i++)r|=a.charCodeAt(i)^b.charCodeAt(i);return r===0;}
+export async function makeToken(){const exp=String(Date.now()+7*864e5);return `${exp}.${await hmac(exp)}`;}
+export async function verifyToken(t?:string){if(!t||!process.env.SESSION_SECRET||process.env.SESSION_SECRET.length<16)return false;const [exp,sig,...rest]=t.split('.');if(!exp||!sig||rest.length||!/^\d+$/.test(exp)||Number(exp)<Date.now())return false;try{return safeEqual(sig,await hmac(exp));}catch{return false;}}

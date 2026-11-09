@@ -1,12 +1,1 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import type { ReactNode } from "react";
-
-export const metadata: Metadata = {
-  title: "HEPRA QR Manager",
-  description: "Create and manage dynamic QR codes for your business.",
-};
-
-export default function RootLayout({ children }: { children: ReactNode }) {
-  return <html lang="en"><body>{children}</body></html>;
-}
+import './globals.css';import type {Metadata} from 'next';export const metadata:Metadata={title:'HEPRA QR Manager',description:'Dynamic QR code management and scan analytics.',robots:{index:false,follow:false}};export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><head><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet"/></head><body>{children}</body></html>;}

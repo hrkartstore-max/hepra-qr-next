@@ -1,0 +1,4 @@
+export function validUrl(input:string):string|null{const u=(input||'').trim();if(!u||u.length>2000||/[\x00-\x1F\x7F\s]/.test(u))return null;let p:URL;try{p=new URL(u);}catch{return null;}const scheme=p.protocol.slice(0,-1).toLowerCase();if(!['http','https','tel','mailto','upi','sms'].includes(scheme))return null;if(['http:','https:'].includes(p.protocol)&&(!p.hostname||p.username||p.password))return null;return u;}
+export const validCode=(c:string)=>/^[A-Za-z0-9_-]{3,32}$/.test(c||'');
+export function genCode(len=8){const alphabet='abcdefghjkmnpqrstuvwxyz23456789',bytes=crypto.getRandomValues(new Uint8Array(len));return Array.from(bytes,b=>alphabet[b%alphabet.length]).join('');}
+export const IST='Asia/Kolkata';export const fmtTime=(d:string|Date)=>new Date(d).toLocaleString('en-IN',{timeZone:IST,dateStyle:'medium',timeStyle:'short'});
